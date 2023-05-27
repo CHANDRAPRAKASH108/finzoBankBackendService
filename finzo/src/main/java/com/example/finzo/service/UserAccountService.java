@@ -8,5 +8,6 @@ import java.util.List;
 public interface UserAccountService {
     UserAccountDto createAccount(UserAccountDto userAccountDto);
     List<UserAccountDto> fetchAllUserAccount();
-    UserAccountDto fetchUserAccount(Integer account);
+    UserAccountDto fetchUserAccountById(Integer account);
+    UserAccountDto fetchUserAccountByAadhar(String aadharNumber);
 }

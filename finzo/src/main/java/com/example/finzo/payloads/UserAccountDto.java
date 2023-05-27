@@ -1,5 +1,10 @@
 package com.example.finzo.payloads;
+import com.example.finzo.utils.AccountStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserAccountDto {
-    private Integer id;
+    private String id;
     @NotEmpty
     private String name;
     @NotEmpty
@@ -16,12 +21,13 @@ public class UserAccountDto {
     @NotEmpty
     private String email;
     @NotEmpty
-    private String contact_number;
+    private String contactNumber;
     @NotEmpty
-    private String pan_number;
+    private String panNumber;
     @NotEmpty
-    private String aadhar_number;
-    private String status;
-    @NotEmpty
-    private String balance;
+    private String aadharNumber;
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
+    @PositiveOrZero(message = "Value must be positive or zero")
+    private Integer balance;
 }
