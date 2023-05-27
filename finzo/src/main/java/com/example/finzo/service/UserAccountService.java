@@ -10,4 +10,5 @@ public interface UserAccountService {
     List<UserAccountDto> fetchAllUserAccount();
     UserAccountDto fetchUserAccountById(Integer account);
     UserAccountDto fetchUserAccountByAadhar(String aadharNumber);
+    String disableAccount(String accountNumber);
 }

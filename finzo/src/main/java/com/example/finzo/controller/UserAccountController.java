@@ -59,4 +59,16 @@ public class UserAccountController {
         UserAccountDto userAccountDto = userAccountService.fetchUserAccountByAadhar(aadharNumber);
         return new ResponseEntity<>(userAccountDto, HttpStatus.OK);
     }
+
+    /**
+     *
+     * @param accountNumber
+     * @return Disables account using account number
+     */
+    @PostMapping("/userAccount/disableAccount/{accountNumber}")
+    public ResponseEntity<String> disableAccount(
+            @PathVariable String accountNumber) {
+        String userAccountDto = userAccountService.disableAccount(accountNumber);
+        return new ResponseEntity<>(userAccountDto, HttpStatus.OK);
+    }
 }
