@@ -21,18 +21,18 @@ public class BalanceImpl implements BalanceService {
     @Override
     public Integer fetchBalanceByAccountNumber(String accountNumber) {
         UserAccountEntity userAccountEntity = userAccountRepo.findById(accountNumber)
-                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID :"+accountNumber));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :" + accountNumber));
         return userAccountEntity.getBalance();
     }
 
     @Override
     public Integer fetchBalanceByAadharNumber(String aadharNumber) {
         Integer currentBalance = 0;
-        try{
+        try {
             UserAccountEntity userAccountEntity = userAccountRepo.findByAadharNumber(aadharNumber);
             currentBalance = userAccountEntity.getBalance();
-        } catch (Exception ignored){
-            throw new ResourceNotFoundException("User not found with provided aadhar number "+ aadharNumber);
+        } catch (Exception ignored) {
+            throw new ResourceNotFoundException("User not found with provided aadhar number " + aadharNumber);
         }
 
         return currentBalance;
@@ -41,7 +41,7 @@ public class BalanceImpl implements BalanceService {
     @Override
     public List<TransactionEntity> fetchAllTransactions(String accountNumber) {
         UserAccountEntity userAccountEntity = userAccountRepo.findById(accountNumber)
-                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID :"+accountNumber));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :" + accountNumber));
         return transactionRepo.findByReceiverAccountId(accountNumber);
     }
 }

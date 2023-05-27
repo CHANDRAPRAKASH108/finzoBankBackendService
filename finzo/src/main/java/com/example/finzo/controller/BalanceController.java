@@ -15,19 +15,21 @@ public class BalanceController {
 
     @Autowired
     BalanceService balanceService;
+
     @GetMapping("/fetchByAccount/{accountNumber}")
-    public ResponseEntity<String> fetchBalanceByAccountNumber(@PathVariable String accountNumber){
+    public ResponseEntity<String> fetchBalanceByAccountNumber(@PathVariable String accountNumber) {
         Integer currentBalance = this.balanceService.fetchBalanceByAccountNumber(accountNumber);
-        return new ResponseEntity<>("Current Balance: "+currentBalance, HttpStatus.OK);
+        return new ResponseEntity<>("Current Balance: " + currentBalance, HttpStatus.OK);
     }
+
     @GetMapping("/fetchByAadhar/{aadharNumber}")
-    public ResponseEntity<String> fetchBalanceByAadharNumber(@PathVariable String aadharNumber){
+    public ResponseEntity<String> fetchBalanceByAadharNumber(@PathVariable String aadharNumber) {
         Integer currentBalance = this.balanceService.fetchBalanceByAadharNumber(aadharNumber);
-        return new ResponseEntity<>("Current Balance: "+currentBalance, HttpStatus.OK);
+        return new ResponseEntity<>("Current Balance: " + currentBalance, HttpStatus.OK);
     }
 
     @GetMapping("/allTransactions/{accountNumber}")
-    public ResponseEntity<List<TransactionEntity>> fetchAllTransaction(@PathVariable String accountNumber){
+    public ResponseEntity<List<TransactionEntity>> fetchAllTransaction(@PathVariable String accountNumber) {
         List<TransactionEntity> transactionEntityList = this.balanceService.fetchAllTransactions(accountNumber);
         return new ResponseEntity<>(transactionEntityList, HttpStatus.OK);
     }
