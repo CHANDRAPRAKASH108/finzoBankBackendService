@@ -43,7 +43,7 @@ public class UserAccountImpl implements UserAccountService {
     @Override
     public UserAccountDto fetchUserAccountById(Integer account) {
         UserAccountEntity userAccountEntity = this.userAccountRepo.findById(String.valueOf(account))
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :"+account));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :" + account));
         return this.modelMapper.map(userAccountEntity, UserAccountDto.class);
     }
 
@@ -52,8 +52,8 @@ public class UserAccountImpl implements UserAccountService {
         UserAccountEntity userAccountEntity;
         try {
             userAccountEntity = this.userAccountRepo.findByAadharNumber(aadharNumber);
-        }catch (Exception e) {
-            throw new ResourceNotFoundException("User not found by aadharNumber :"+aadharNumber);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("User not found by aadharNumber :" + aadharNumber);
         }
         return this.modelMapper.map(userAccountEntity, UserAccountDto.class);
     }
@@ -61,12 +61,12 @@ public class UserAccountImpl implements UserAccountService {
     @Override
     public String disableAccount(String accountNumber) {
         UserAccountEntity userAccountEntity = userAccountRepo.findById(accountNumber)
-                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID :"+accountNumber));
-        if (userAccountEntity.getStatus().equals(AccountStatus.ACTIVE)){
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :" + accountNumber));
+        if (userAccountEntity.getStatus().equals(AccountStatus.ACTIVE)) {
             userAccountEntity.setStatus(AccountStatus.IN_ACTIVE);
             userAccountRepo.save(userAccountEntity);
             return DEACTIVATED;
-        }else {
+        } else {
             return ALREADY_DEACTIVATED;
         }
     }

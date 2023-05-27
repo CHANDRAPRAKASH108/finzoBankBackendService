@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface UserAccountService {
     UserAccountDto createAccount(UserAccountDto userAccountDto);
+
     List<UserAccountDto> fetchAllUserAccount();
+
     UserAccountDto fetchUserAccountById(Integer account);
+
     UserAccountDto fetchUserAccountByAadhar(String aadharNumber);
+
     String disableAccount(String accountNumber);
 }

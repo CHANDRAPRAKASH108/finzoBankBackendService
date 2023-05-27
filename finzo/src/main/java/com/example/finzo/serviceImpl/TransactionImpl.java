@@ -26,11 +26,12 @@ public class TransactionImpl implements TransactionService {
     private TransactionRepo transactionRepo;
     @Autowired
     private ModelMapper modelMapper;
+
     @Override
     public Integer depositToAccount(TransactionDto transactionDto) {
         String accountNumber = transactionDto.getReceiverAccountId();
         UserAccountEntity userAccountEntity = userAccountRepo.findById(accountNumber)
-                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID :"+accountNumber));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :" + accountNumber));
         int beforeDeposit = userAccountEntity.getBalance();
         int afterDeposit = beforeDeposit + transactionDto.getAmount();
         userAccountEntity.setBalance(afterDeposit);
@@ -48,10 +49,10 @@ public class TransactionImpl implements TransactionService {
         String accountNumber = transactionDto.getReceiverAccountId();
         int afterWithdrawal = 0;
         UserAccountEntity userAccountEntity = userAccountRepo.findById(accountNumber)
-                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID :"+accountNumber));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :" + accountNumber));
         int beforeWithdrawal = userAccountEntity.getBalance();
-        if (beforeWithdrawal >= transactionDto.getAmount()){
-            if (userAccountEntity.getStatus().equals(AccountStatus.ACTIVE.name())){
+        if (beforeWithdrawal >= transactionDto.getAmount()) {
+            if (userAccountEntity.getStatus().equals(AccountStatus.ACTIVE.name())) {
                 afterWithdrawal = beforeWithdrawal - transactionDto.getAmount();
                 userAccountEntity.setBalance(afterWithdrawal);
                 userAccountRepo.save(userAccountEntity);
@@ -61,17 +62,17 @@ public class TransactionImpl implements TransactionService {
                 transactionEntity.setTransactionType(TransactionType.WITHDRAW);
                 this.transactionRepo.save(transactionEntity);
                 return WITHDRAWN_MESSAGE + afterWithdrawal;
-            }else {
+            } else {
                 return ACCOUNT_DISABLED;
             }
-        }else {
+        } else {
             return NOT_SUFFICIENT + beforeWithdrawal;
         }
     }
 
-    public Integer currentBalanceByAccountNumber(String accountNumber){
+    public Integer currentBalanceByAccountNumber(String accountNumber) {
         UserAccountEntity userAccountEntity = userAccountRepo.findById(accountNumber)
-                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID :"+accountNumber));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :" + accountNumber));
         return userAccountEntity.getBalance();
     }
 }

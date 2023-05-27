@@ -20,17 +20,19 @@ import static com.example.finzo.utils.Constants.DEPOSIT_MESSAGE;
 public class TransactionController {
     @Autowired
     TransactionService transactionService;
+
     @PostMapping("/deposit")
     public ResponseEntity<String> depositToAccount(
             @Valid
-            @RequestBody TransactionDto transactionDto){
+            @RequestBody TransactionDto transactionDto) {
         Integer currentBalance = this.transactionService.depositToAccount(transactionDto);
-        return new ResponseEntity<>(DEPOSIT_MESSAGE +currentBalance, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(DEPOSIT_MESSAGE + currentBalance, HttpStatus.ACCEPTED);
     }
+
     @PostMapping("/withdraw")
     public ResponseEntity<String> withdrawFromAccount(
             @Valid
-            @RequestBody TransactionDto transactionDto){
+            @RequestBody TransactionDto transactionDto) {
         String message = this.transactionService.withdrawFromAccount(transactionDto);
         return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
     }
