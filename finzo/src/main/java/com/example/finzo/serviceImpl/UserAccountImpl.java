@@ -15,6 +15,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.finzo.utils.Constants.ALREADY_DEACTIVATED;
+import static com.example.finzo.utils.Constants.DEACTIVATED;
+
 @Service
 public class UserAccountImpl implements UserAccountService {
     @Autowired
@@ -39,7 +42,7 @@ public class UserAccountImpl implements UserAccountService {
 
     @Override
     public UserAccountDto fetchUserAccountById(Integer account) {
-        UserAccountEntity userAccountEntity = this.userAccountRepo.findById(account)
+        UserAccountEntity userAccountEntity = this.userAccountRepo.findById(String.valueOf(account))
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :"+account));
         return this.modelMapper.map(userAccountEntity, UserAccountDto.class);
     }
@@ -53,5 +56,18 @@ public class UserAccountImpl implements UserAccountService {
             throw new ResourceNotFoundException("User not found by aadharNumber :"+aadharNumber);
         }
         return this.modelMapper.map(userAccountEntity, UserAccountDto.class);
+    }
+
+    @Override
+    public String disableAccount(String accountNumber) {
+        UserAccountEntity userAccountEntity = userAccountRepo.findById(accountNumber)
+                .orElseThrow(()-> new ResourceNotFoundException("User not found with ID :"+accountNumber));
+        if (userAccountEntity.getStatus().equals(AccountStatus.ACTIVE)){
+            userAccountEntity.setStatus(AccountStatus.IN_ACTIVE);
+            userAccountRepo.save(userAccountEntity);
+            return DEACTIVATED;
+        }else {
+            return ALREADY_DEACTIVATED;
+        }
     }
 }
