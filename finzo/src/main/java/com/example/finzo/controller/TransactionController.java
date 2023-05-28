@@ -1,6 +1,8 @@
 package com.example.finzo.controller;
 
 import com.example.finzo.Exception.ApiResponse;
+import com.example.finzo.entity.TransactionEntity;
+import com.example.finzo.payloads.AccountToAccountDto;
 import com.example.finzo.payloads.TransactionDto;
 import com.example.finzo.service.TransactionService;
 import com.example.finzo.utils.Constants;
@@ -21,6 +23,12 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
+    /**
+     *
+     * @param transactionDto
+     * @return Api is to make deposit to an account
+     */
+
     @PostMapping("/deposit")
     public ResponseEntity<String> depositToAccount(
             @Valid
@@ -29,11 +37,24 @@ public class TransactionController {
         return new ResponseEntity<>(DEPOSIT_MESSAGE + currentBalance, HttpStatus.ACCEPTED);
     }
 
+    /**
+     *
+     * @param transactionDto
+     * @return Aoi is to make withdrawal from an account
+     */
+
     @PostMapping("/withdraw")
     public ResponseEntity<String> withdrawFromAccount(
             @Valid
             @RequestBody TransactionDto transactionDto) {
         String message = this.transactionService.withdrawFromAccount(transactionDto);
         return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
+    }
+    @PostMapping("/accountToAccount")
+    public ResponseEntity<TransactionEntity> depositFromAccountToAccount(
+            @Valid
+            @RequestBody AccountToAccountDto accountToAccountDto) {
+        TransactionEntity transactionDto = this.transactionService.depositAccountToAccount(accountToAccountDto);
+        return new ResponseEntity<>(transactionDto,HttpStatus.OK);
     }
 }
