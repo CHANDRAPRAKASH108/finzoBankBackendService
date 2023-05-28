@@ -50,6 +50,12 @@ public class TransactionController {
         String message = this.transactionService.withdrawFromAccount(transactionDto);
         return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
     }
+
+    /**
+     *
+     * @param accountToAccountDto
+     * @return Api call to make account to account transactions
+     */
     @PostMapping("/accountToAccount")
     public ResponseEntity<TransactionEntity> depositFromAccountToAccount(
             @Valid
