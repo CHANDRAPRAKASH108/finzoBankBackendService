@@ -11,8 +11,8 @@ import org.springframework.http.HttpStatusCode;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiResponse {
+public class ApiResponse extends RuntimeException{
 
     private String message;
-    private HttpStatusCode code;
+
 }

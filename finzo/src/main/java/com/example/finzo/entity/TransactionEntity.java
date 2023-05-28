@@ -20,4 +20,5 @@ public class TransactionEntity {
     private TransactionType transactionType;
     private LocalDateTime transactionTime;
     private String receiverAccountId;
+    private String senderAccountId;
 }
