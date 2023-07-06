@@ -1,4 +1,5 @@
 package com.example.finzo.entity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
@@ -7,26 +8,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "transaction_log")
-public class TransactionEntity {
+@Table(name = "withdraw_log")
+public class withdrawEntity {
     @Id
-    private UUID transactionId;
+    private UUID id;
+    private String accountNumber;
     private Integer amount;
-    private LocalDateTime transactionTime;
-    private String receiverAccountId;
-    private String senderAccountId;
+    private Integer currentBalance;
+    private UUID transaction_log_id;
 
     @PrePersist
     public void generateId() {
-        if (transactionId == null) {
-            transactionId = UUID.randomUUID();
+        if (id == null) {
+            id = UUID.randomUUID();
         }
     }
 }
