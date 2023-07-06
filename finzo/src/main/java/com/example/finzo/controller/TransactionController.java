@@ -33,7 +33,7 @@ public class TransactionController {
     public ResponseEntity<String> depositToAccount(
             @Valid
             @RequestBody TransactionDto transactionDto) {
-        Integer currentBalance = this.transactionService.depositToAccount(transactionDto);
+        String currentBalance = this.transactionService.depositToAccount(transactionDto);
         return new ResponseEntity<>(DEPOSIT_MESSAGE + currentBalance, HttpStatus.ACCEPTED);
     }
 
