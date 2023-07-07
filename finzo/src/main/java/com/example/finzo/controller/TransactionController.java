@@ -5,7 +5,6 @@ import com.example.finzo.entity.TransactionEntity;
 import com.example.finzo.payloads.AccountToAccountDto;
 import com.example.finzo.payloads.TransactionDto;
 import com.example.finzo.service.TransactionService;
-import com.example.finzo.utils.Constants;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.example.finzo.utils.Constants.DEPOSIT_MESSAGE;
-
 @RestController
 @RequestMapping("/api/finzo/transaction")
 public class TransactionController {
@@ -24,35 +21,32 @@ public class TransactionController {
     TransactionService transactionService;
 
     /**
-     *
      * @param transactionDto
      * @return Api is to make deposit to an account
      */
 
     @PostMapping("/deposit")
-    public ResponseEntity<String> depositToAccount(
+    public ResponseEntity<TransactionEntity> depositToAccount(
             @Valid
             @RequestBody TransactionDto transactionDto) {
-        String currentBalance = this.transactionService.depositToAccount(transactionDto);
-        return new ResponseEntity<>(DEPOSIT_MESSAGE + currentBalance, HttpStatus.ACCEPTED);
+        TransactionEntity currentBalance = this.transactionService.depositToAccount(transactionDto);
+        return new ResponseEntity<>(currentBalance, HttpStatus.ACCEPTED);
     }
 
     /**
-     *
      * @param transactionDto
      * @return Aoi is to make withdrawal from an account
      */
 
     @PostMapping("/withdraw")
-    public ResponseEntity<String> withdrawFromAccount(
+    public ResponseEntity<TransactionEntity> withdrawFromAccount(
             @Valid
             @RequestBody TransactionDto transactionDto) {
-        String message = this.transactionService.withdrawFromAccount(transactionDto);
+        TransactionEntity message = this.transactionService.withdrawFromAccount(transactionDto);
         return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
     }
 
     /**
-     *
      * @param accountToAccountDto
      * @return Api call to make account to account transactions
      */
@@ -61,6 +55,6 @@ public class TransactionController {
             @Valid
             @RequestBody AccountToAccountDto accountToAccountDto) {
         TransactionEntity transactionDto = this.transactionService.depositAccountToAccount(accountToAccountDto);
-        return new ResponseEntity<>(transactionDto,HttpStatus.OK);
+        return new ResponseEntity<>(transactionDto, HttpStatus.OK);
     }
 }

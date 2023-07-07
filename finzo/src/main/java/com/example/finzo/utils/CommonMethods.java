@@ -10,6 +10,7 @@ import com.example.finzo.entity.TransactionEntity;
 import com.example.finzo.entity.UserAccountEntity;
 import com.example.finzo.entity.withdrawEntity;
 import com.example.finzo.payloads.AccountToAccountDto;
+import com.example.finzo.payloads.TransactionDto;
 import com.example.finzo.service.TransactionService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -38,16 +39,18 @@ public class CommonMethods {
 
     /**
      * This method is about account validation like if there is any account exist with provided account number
+     *
      * @param accountNumber
      * @return UserAccountEntity
      */
-    public UserAccountEntity accountExists(String accountNumber) {
+    public UserAccountEntity fetchUserAccount(String accountNumber) {
         return userAccountRepo.findById(accountNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + accountNumber));
     }
 
     /**
      * This method is about validation of sender and receiver's account if it is not same
+     *
      * @param accountToAccountDto
      * @return Boolean
      */
@@ -57,6 +60,7 @@ public class CommonMethods {
 
     /**
      * This method talks about adding one entry in transaction log table
+     *
      * @param accountToAccountDto
      * @return TransactionEntity
      */
@@ -70,7 +74,23 @@ public class CommonMethods {
     }
 
     /**
+     * This method talks about adding one entry in transaction log table
+     *
+     * @param transactionDto
+     * @return TransactionEntity
+     */
+    public TransactionEntity addTransactionLogEntry(TransactionDto transactionDto) {
+        TransactionEntity transactionEntity = this.modelMapper.map(transactionDto, TransactionEntity.class);
+        transactionEntity.setSenderAccountId("BANK");
+        transactionEntity.setTransactionTime(LocalDateTime.now());
+        this.transactionRepo.save(transactionEntity);
+        logger.debug("Transaction Successful");
+        return transactionEntity;
+    }
+
+    /**
      * This method talks about adding one entry in deposit log table
+     *
      * @param accountToAccountDto
      * @return
      */
@@ -84,7 +104,23 @@ public class CommonMethods {
     }
 
     /**
+     * This method talks about adding one entry in deposit log table
+     *
+     * @param transactionDto
+     * @return
+     */
+    public void addDepositEntry(TransactionDto transactionDto, TransactionEntity transactionEntity, Integer currentBalance) {
+        DepositEntity depositEntity = new DepositEntity();
+        depositEntity.setAccountNumber(transactionDto.getReceiverAccountId());
+        depositEntity.setAmount(transactionDto.getAmount());
+        depositEntity.setTransaction_log_id(transactionEntity.getTransactionId());
+        depositEntity.setCurrentBalance(currentBalance);
+        depositRepo.save(depositEntity);
+    }
+
+    /**
      * This method talks about adding one entry in withdraw log table
+     *
      * @param accountToAccountDto
      * @return
      */
@@ -92,6 +128,21 @@ public class CommonMethods {
         withdrawEntity withdrawEntity = new withdrawEntity();
         withdrawEntity.setAccountNumber(accountToAccountDto.getSenderAccountId());
         withdrawEntity.setAmount(accountToAccountDto.getAmount());
+        withdrawEntity.setTransaction_log_id(transactionEntity.getTransactionId());
+        withdrawEntity.setCurrentBalance(currentBalance);
+        withdrawRepo.save(withdrawEntity);
+    }
+
+    /**
+     * This method talks about adding one entry in withdraw log table
+     *
+     * @param transactionDto
+     * @return
+     */
+    public void addWithdrawEntry(TransactionDto transactionDto, TransactionEntity transactionEntity, Integer currentBalance) {
+        withdrawEntity withdrawEntity = new withdrawEntity();
+        withdrawEntity.setAccountNumber(transactionDto.getReceiverAccountId());
+        withdrawEntity.setAmount(transactionDto.getAmount());
         withdrawEntity.setTransaction_log_id(transactionEntity.getTransactionId());
         withdrawEntity.setCurrentBalance(currentBalance);
         withdrawRepo.save(withdrawEntity);
