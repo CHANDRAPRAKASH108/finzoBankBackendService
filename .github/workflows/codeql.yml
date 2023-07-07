@@ -13,6 +13,7 @@ name: "CodeQL"
 
 on:
   push:
+    branches: [ "master" ]
   pull_request:
   schedule:
     - cron: '29 20 * * 6'
