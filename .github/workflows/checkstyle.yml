@@ -25,7 +25,9 @@ jobs:
           distribution: 'adopt'
 
       - name: Run Checkstyle
-        run: ./gradlew checkstyleMain
+        run: |
+          chmod +x ./gradlew
+          ./gradlew checkstyleMain
 
       - name: Upload Checkstyle Results
         uses: actions/upload-artifact@v2

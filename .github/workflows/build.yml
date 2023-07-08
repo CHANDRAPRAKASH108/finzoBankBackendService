@@ -24,17 +24,9 @@ jobs:
           java-version: 19
           distribution: 'adopt'
 
-      - name: Change directory and run command
+      - name: Run command
         run: |
           chmod +x ./gradlew
           ./gradlew build
-      - name: Run Checkstyle
-        run: ./gradlew checkstyleMain
-
-      - name: Upload Checkstyle Results
-        uses: actions/upload-artifact@v2
-        with:
-          name: checkstyle-results
-          path: build/reports/checkstyle/main.xml
 
 
