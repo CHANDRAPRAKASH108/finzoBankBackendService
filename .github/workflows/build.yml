@@ -31,10 +31,10 @@ jobs:
           chmod +x ./gradlew
           ./gradlew build
       - name: Run Checkstyle
+        working-directory: ./finzo
         run: ./gradlew checkstyleMain
 
       - name: Upload Checkstyle Results
-        working-directory: ./finzo
         uses: actions/upload-artifact@v2
         with:
           name: checkstyle-results
