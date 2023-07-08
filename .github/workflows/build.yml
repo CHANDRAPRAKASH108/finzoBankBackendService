@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: 'adopt'
 
       - name: Grant execute permission for Gradle wrapper (Unix/Mac)
         run: chmod +x ./gradlew
