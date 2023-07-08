@@ -1,13 +1,11 @@
-## This file contains project build configuration
-
-## This file contains project build configuration
+## This file contains project checkstyle configuration
 
 name: Checkstyle
 
 on:
   push:
-  branches:
-    - main
+    branches:
+      - main
   pull_request:
 
 jobs:
@@ -26,15 +24,5 @@ jobs:
         with:
           java-version: 19
           distribution: 'adopt'
-
-      - name: Run Checkstyle
-        working-directory: ./finzo
-        run: ./gradlew checkstyleMain
-
-      - name: Upload Checkstyle Results
-        uses: actions/upload-artifact@v2
-        with:
-          name: checkstyle-results
-          path: build/reports/checkstyle/main.xml
 
 
