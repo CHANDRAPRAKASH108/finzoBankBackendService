@@ -25,7 +25,6 @@ jobs:
           distribution: 'adopt'
 
       - name: Change directory and run command
-        working-directory: ./finzo
         run: |
           chmod +x ./gradlew
           ./gradlew build

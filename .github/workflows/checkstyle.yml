@@ -24,4 +24,15 @@ jobs:
           java-version: 19
           distribution: 'adopt'
 
+      - name: Run Checkstyle
+        working-directory: ./finzo
+        run: ./gradlew checkstyleMain
+
+      - name: Upload Checkstyle Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: checkstyle-results
+          path: build/reports/checkstyle/main.xml
+
+
 
