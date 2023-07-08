@@ -50,7 +50,6 @@ public class CommonMethods {
 
     /**
      * This method is about validation of sender and receiver's account if it is not same
-     *
      * @param accountToAccountDto
      * @return Boolean
      */
@@ -60,7 +59,6 @@ public class CommonMethods {
 
     /**
      * This method talks about adding one entry in transaction log table
-     *
      * @param accountToAccountDto
      * @return TransactionEntity
      */
