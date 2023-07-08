@@ -29,7 +29,6 @@ jobs:
           chmod +x ./gradlew
           ./gradlew build
       - name: Run Checkstyle
-        working-directory: ./finzo
         run: ./gradlew checkstyleMain
 
       - name: Upload Checkstyle Results

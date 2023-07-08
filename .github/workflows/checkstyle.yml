@@ -25,7 +25,6 @@ jobs:
           distribution: 'adopt'
 
       - name: Run Checkstyle
-        working-directory: ./finzo
         run: ./gradlew checkstyleMain
 
       - name: Upload Checkstyle Results
