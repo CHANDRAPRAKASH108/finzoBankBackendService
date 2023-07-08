@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.example.finzo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.example.finzo.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/finzo.iml" filepath="$PROJECT_DIR$/.idea/finzo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/finzo.finzo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/finzo.finzo.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/finzo.main.iml" filepath="$PROJECT_DIR$/.idea/modules/finzo.main.iml" />
     </modules>
   </component>
 </project>
