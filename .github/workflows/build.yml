@@ -25,10 +25,10 @@ jobs:
           java-version: 11
           distribution: 'adopt'
 
-      - name: Change permissions for gradlew
-        run: chmod +x ./gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Change directory and run command
+        working-directory: ./finzo
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build
 
 
