@@ -43,7 +43,7 @@ public class CommonMethods {
      * @param accountNumber
      * @return UserAccountEntity
      */
-    public UserAccountEntity fetchUserAccount(String accountNumber) {
+    public UserAccountEntity fetchUserAccount(String accountNumber){
         return userAccountRepo.findById(accountNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + accountNumber));
     }
@@ -54,7 +54,7 @@ public class CommonMethods {
      * @param accountToAccountDto
      * @return Boolean
      */
-    public Boolean validateAccounts(AccountToAccountDto accountToAccountDto) {
+    public Boolean validateAccounts(AccountToAccountDto accountToAccountDto){
         return !accountToAccountDto.getReceiverAccountId().equals(accountToAccountDto.getSenderAccountId());
     }
 
