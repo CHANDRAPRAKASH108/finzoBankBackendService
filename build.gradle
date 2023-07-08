@@ -9,7 +9,6 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
-
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -36,3 +35,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Run Checkstyle checks before every build
+check.dependsOn('checkstyleMain')
+
+// Fail the build if Checkstyle violations are found
+build.dependsOn('checkstyleMain')
