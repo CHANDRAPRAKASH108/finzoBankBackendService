@@ -1,6 +1,6 @@
 package com.example.finzo.service;
 
-import com.example.finzo.entity.TransactionEntity;
+import com.example.finzo.entity.TransactionHistory;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ public interface BalanceService {
 
     Integer fetchBalanceByAadharNumber(String aadharNumber);
 
-    List<TransactionEntity> fetchAllTransactions(String accountNumber);
+    List<TransactionHistory> fetchAllTransactions(String accountNumber);
 }

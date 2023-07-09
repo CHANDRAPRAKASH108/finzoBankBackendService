@@ -36,3 +36,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Run Checkstyle checks before every build
+check.dependsOn('checkstyleMain')
+
+// Fail the build if Checkstyle violations are found
+build.dependsOn('checkstyleMain')

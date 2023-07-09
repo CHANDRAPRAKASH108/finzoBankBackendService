@@ -1,15 +1,18 @@
 package com.example.finzo.serviceImpl;
 
 import com.example.finzo.Exception.ResourceNotFoundException;
+import com.example.finzo.Repository.TransactionHistoryRepo;
 import com.example.finzo.Repository.TransactionRepo;
 import com.example.finzo.Repository.UserAccountRepo;
-import com.example.finzo.entity.TransactionEntity;
+import com.example.finzo.entity.TransactionHistory;
 import com.example.finzo.entity.UserAccountEntity;
 import com.example.finzo.service.BalanceService;
+import com.example.finzo.utils.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class BalanceImpl implements BalanceService {
@@ -17,6 +20,8 @@ public class BalanceImpl implements BalanceService {
     UserAccountRepo userAccountRepo;
     @Autowired
     TransactionRepo transactionRepo;
+    @Autowired
+    TransactionHistoryRepo transactionHistoryRepo;
 
     @Override
     public Integer fetchBalanceByAccountNumber(String accountNumber) {
@@ -39,9 +44,21 @@ public class BalanceImpl implements BalanceService {
     }
 
     @Override
-    public List<TransactionEntity> fetchAllTransactions(String accountNumber) {
+    public List<TransactionHistory> fetchAllTransactions(String accountNumber) {
         UserAccountEntity userAccountEntity = userAccountRepo.findById(accountNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID :" + accountNumber));
-        return transactionRepo.findByReceiverAccountId(accountNumber);
+        List<Object[]> result = transactionHistoryRepo.getTransactionHistory(userAccountEntity.getId());
+        List<TransactionHistory> transactionResults = new ArrayList<>();
+        for (Object[] row : result) {
+            TransactionHistory transactionResult = new TransactionHistory();
+            transactionResult.setTransactionId((UUID) row[0]);
+            transactionResult.setAmount((Integer) row[1]);
+            transactionResult.setTransactionType((TransactionType) row[2]);
+            transactionResult.setCurrentBalance((Integer) row[3]);
+            transactionResult.setTransaction_time((LocalDateTime) row[4]);
+            transactionResults.add(transactionResult);
+        }
+        Collections.sort(transactionResults, Comparator.comparing(TransactionHistory::getTransaction_time));
+        return transactionResults;
     }
 }

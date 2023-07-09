@@ -1,6 +1,8 @@
 package com.example.finzo.controller;
 
+import com.example.finzo.entity.DepositEntity;
 import com.example.finzo.entity.TransactionEntity;
+import com.example.finzo.entity.TransactionHistory;
 import com.example.finzo.service.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,9 +30,9 @@ public class BalanceController {
         return new ResponseEntity<>("Current Balance: " + currentBalance, HttpStatus.OK);
     }
 
-    @GetMapping("/allTransactions/{accountNumber}")
-    public ResponseEntity<List<TransactionEntity>> fetchAllTransaction(@PathVariable String accountNumber) {
-        List<TransactionEntity> transactionEntityList = this.balanceService.fetchAllTransactions(accountNumber);
+    @GetMapping("/transactionHistory/{accountNumber}")
+    public ResponseEntity<List<TransactionHistory>> fetchAllTransaction(@PathVariable String accountNumber) {
+        List<TransactionHistory> transactionEntityList = this.balanceService.fetchAllTransactions(accountNumber);
         return new ResponseEntity<>(transactionEntityList, HttpStatus.OK);
     }
 }

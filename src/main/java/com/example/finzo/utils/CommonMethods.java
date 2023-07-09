@@ -8,7 +8,7 @@ import com.example.finzo.Repository.WithdrawRepo;
 import com.example.finzo.entity.DepositEntity;
 import com.example.finzo.entity.TransactionEntity;
 import com.example.finzo.entity.UserAccountEntity;
-import com.example.finzo.entity.withdrawEntity;
+import com.example.finzo.entity.WithdrawEntity;
 import com.example.finzo.payloads.AccountToAccountDto;
 import com.example.finzo.payloads.TransactionDto;
 import com.example.finzo.service.TransactionService;
@@ -125,7 +125,7 @@ public class CommonMethods {
      * @return
      */
     public void addWithdrawEntry(AccountToAccountDto accountToAccountDto, TransactionEntity transactionEntity, Integer currentBalance) {
-        withdrawEntity withdrawEntity = new withdrawEntity();
+        WithdrawEntity withdrawEntity = new WithdrawEntity();
         withdrawEntity.setAccountNumber(accountToAccountDto.getSenderAccountId());
         withdrawEntity.setAmount(accountToAccountDto.getAmount());
         withdrawEntity.setTransaction_log_id(transactionEntity.getTransactionId());
@@ -140,7 +140,7 @@ public class CommonMethods {
      * @return
      */
     public void addWithdrawEntry(TransactionDto transactionDto, TransactionEntity transactionEntity, Integer currentBalance) {
-        withdrawEntity withdrawEntity = new withdrawEntity();
+        WithdrawEntity withdrawEntity = new WithdrawEntity();
         withdrawEntity.setAccountNumber(transactionDto.getReceiverAccountId());
         withdrawEntity.setAmount(transactionDto.getAmount());
         withdrawEntity.setTransaction_log_id(transactionEntity.getTransactionId());
