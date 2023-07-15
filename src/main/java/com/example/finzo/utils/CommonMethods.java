@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 @Component
 public class CommonMethods {
@@ -146,5 +147,15 @@ public class CommonMethods {
         withdrawEntity.setTransaction_log_id(transactionEntity.getTransactionId());
         withdrawEntity.setCurrentBalance(currentBalance);
         withdrawRepo.save(withdrawEntity);
+    }
+
+    public static String generateUserId() {
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            int digit = random.nextInt(10);
+            sb.append(digit);
+        }
+        return sb.toString();
     }
 }

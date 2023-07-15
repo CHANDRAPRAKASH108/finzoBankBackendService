@@ -1,5 +1,6 @@
 package com.example.finzo.controller;
 
+import com.example.finzo.entity.UserAccountResponse;
 import com.example.finzo.payloads.UserAccountDto;
 import com.example.finzo.service.UserAccountService;
 import jakarta.validation.Valid;
@@ -23,10 +24,10 @@ public class UserAccountController {
      * This endpoint will be available for user having admin access
      */
     @PostMapping("/userAccount")
-    public ResponseEntity<UserAccountDto> createAccount(
+    public ResponseEntity<UserAccountResponse> createAccount(
             @Valid
             @RequestBody UserAccountDto userAccountRequest) {
-        UserAccountDto userAccountDto = userAccountService.createAccount(userAccountRequest);
+        UserAccountResponse userAccountDto = userAccountService.createAccount(userAccountRequest);
         return new ResponseEntity<>(userAccountDto, HttpStatus.OK);
 
     }

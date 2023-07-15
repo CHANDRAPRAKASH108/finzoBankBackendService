@@ -30,4 +30,5 @@ public class UserAccountDto {
     private AccountStatus status;
     @PositiveOrZero(message = "Value must be positive or zero")
     private Integer balance;
+    private String password;
 }
